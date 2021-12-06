@@ -32,3 +32,18 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+/dist
+.env.*.local
+
+# Log files
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
