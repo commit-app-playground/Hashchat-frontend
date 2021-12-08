@@ -1,26 +1,83 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="page-container">
+    <md-app md-waterfall md-mode="fixed">
+      <md-app-toolbar class="md-primary">
+        <span class="md-title"  v-on:click="goHome">Hashchat</span>
+      </md-app-toolbar>
+
+      <md-app-drawer md-permanent="full"  v-if="username !== ''">
+        <md-toolbar class="md-transparent" md-elevation="0">
+          <img alt="Vue logo" src="./assets/hashtag.png" class="test" v-on:click="goHome">
+          <button v-on:click="addUser" type="submit" value="Join" class="btn btn-sm btn-info ml-1" >+</button>
+        </md-toolbar>
+
+        <md-list v-for="channel in channels" :key="channel">
+           <md-list-item v-on:click="goToChat(channel)">
+            <md-icon>move_to_inbox</md-icon>
+            <span class="md-list-item-text">{{channel}}</span>
+          </md-list-item>
+        </md-list>
+      </md-app-drawer>
+
+      <md-app-content>
+        <router-view v-on:childToParent="onChildClick"/>
+      </md-app-content>
+    </md-app>
+  </div>
 </template>
 
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      channels: null,
+      username:'',
+    }
+  },
+  methods: {
+    addUser() {
+      console.log("YURT")
+      axios.put("http://127.0.0.1:8080/app/v1/user/danman/hashtag", {hashtagId: 'test2'})
+    },  
+    onChildClick (value) {
+      this.username = value
+    },
+    goToChat(hashtagId) {
+      this.$router.push({ path: `/user/${this.username}/chat/${hashtagId}` })
+    },
+    goHome() {
+      this.$router.push({ path: `/user/${this.username}` })
+    }
+         
+  },
+  mounted () {
+    axios.get("http://127.0.0.1:8080/app/v1/user/danman").then(response => (this.channels = response.data))
   }
 }
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+<style scoped>
+  .md-app {
+    height: 100vh;
+    border: 1px solid rgba(#000, .12);
+  }
+
+  .md-drawer {
+    width: 230px;
+    max-width: calc(100vw - 125px);
+  }
+  .md-list-item {
+    border-top: 0.5px solid lightgrey;
+  }
+  .test {
+    height: 50px;
+    width: 50px;
+    margin: auto;
+  }
 </style>
