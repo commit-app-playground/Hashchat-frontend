@@ -58,7 +58,7 @@ export default {
          
   },
   mounted () {
-    axios.get("app/v1/user/danman").then(response => (this.channels = response.data))
+    axios.get("https://hashchat-api.onboarding.dev/app/v1/user/danman").then(response => (this.channels = response.data))
   }
 }
 
