@@ -45,10 +45,6 @@ export default {
       .catch(err => console.log(err))
       axios.post("https://hashchat-api.onboarding.dev/app/v1/user/danman/hashtag", {hashtagId: 'test2'})
       .catch(err => console.log(err))
-      axios.post("http://hashchat-api.onboarding.dev/app/v1/user/danman/hashtag", {hashtagId: 'test2'}, {withCredentials: true})
-      .catch(err => console.log(err))
-      axios.post("http://hashchat-api.onboarding.dev/app/v1/user/danman/hashtag", {hashtagId: 'test2'})
-      .catch(err => console.log(err))
     },  
     onChildClick (value) {
       this.username = value
