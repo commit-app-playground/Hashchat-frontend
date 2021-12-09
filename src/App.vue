@@ -41,7 +41,8 @@ export default {
   methods: {
     addUser() {
       console.log("YURT")
-      axios.post("https://hashchat-api.onboarding.dev/app/v1/user/danman/hashtag", {hashtagId: 'test2'})
+      axios.post("https://hashchat-api.onboarding.dev/app/v1/user/danman/hashtag", {hashtagId: 'test2'}, {withCredentials: true})
+      .catch(err => console.log(err))
     },  
     onChildClick (value) {
       this.username = value
