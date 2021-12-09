@@ -74,7 +74,7 @@
       },
       connect () {
         console.log("Starting connection to WebSocket Server")
-        this.connection = new WebSocket("ws://hashchat-api.onboarding.dev/app/v1/websocket")
+        this.connection = new WebSocket("ws://127.0.0.1:8080/app/v1/websocket")
         this.connection.onopen = () => {
           this.status = 'connected'
           console.log('WebSocket connected to:', this.connection.url)
