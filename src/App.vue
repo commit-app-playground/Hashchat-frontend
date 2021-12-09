@@ -45,6 +45,9 @@ export default {
       // .catch(err => console.log(err))
       axios.post("https://hashchat-api.onboarding.dev/app/v1/user/danman")
       .catch(err => console.log(err))
+      
+      axios.post("https://hashchat-api.onboarding.dev/app/v1/user/danman/hashtag", {hashtagId: 'test2'})
+
     },  
     onChildClick (value) {
       this.username = value
