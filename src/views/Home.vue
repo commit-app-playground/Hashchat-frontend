@@ -3,19 +3,24 @@
       <div class="col-lg-8 offset-lg-3">
         <h1>Welcome {{ name }} </h1>
         <h5>
-          Please select a chat channel to take part in.
-          Alternatively, add a new hashtag to join or enter multiple hashtags to view many conversations.
+          Please select a chat channel on the left to take part in.
         </h5>
-        <div>
-          <span class="md-list-item-text">Add a new Hashtag!</span>
-          <input type="text" class="form-control col-9"  placeholder="Enter hashtag here">
-          <button v-on:click="addUser" type="submit" value="Join" class="btn btn-sm btn-info ml-1" >+</button>
+        
+        <div class="newHashtag">
+          <h5>
+            Alternatively, add a new hashtag below to join or enter multiple hashtags (comma seperated!) to view many conversations.
+          </h5>
+          <div  class="newHashtagDiv">
+            <input type="text" class="form-control col-9"  placeholder="Enter hashtag here" v-model="newHashtag">
+            <button v-on:click="addHashtag" type="submit" value="Join" class="btn btn-sm btn-info ml-1" >+</button>
+          </div>  
         </div>
       </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
 
   export default {
     name: 'Home',
@@ -24,23 +29,19 @@
     },
     data () {
         return {
-          messages: [
-            {text: "Hey man how are you keeping", user:"jd", id: 12345, type: 1 },
-            {text: "Pretty good yourself?", user:"yoyo", id: 123456, type: 1 },
-                {text: "What do you think of this new chat app?", user:"jd", id: 123451213, type: 0 },
-            {text: "Yeah it's pretty cool, still getting used to it though", user:"yoyo", id: 123412312356, type: 1 },
-          
-          ],
-          info: [
-            {username:"jd", id: 123415, type: "admin" },
-            {username:"yoyo", id: 1232415, type: "free" },
-            ],
-          connections: 2,
-          connection: null,
-          newMessage:  "danman",
+          newHashtag: "",
             
       }
     },
+    methods: {
+      addHashtag() {
+        const payload = this.$data.newHashtag
+        axios.post(`http://hashchat-api.onboarding.dev/app/v1/user/${this.name}`, {hashtagId: payload})
+        .then(() => (this.$emit('onUpdateHashags', payload)))
+        .catch(err => console.log(err))
+        this.$data.newHashtag = ''
+      }
+    }
   }
 </script>
 
@@ -59,5 +60,11 @@ li {
 }
 a {
   color: #42b983;
+}
+.newHashtag {
+  padding-top: 20px;
+}
+.newHashtagDiv {
+  display: flex;
 }
 </style>
