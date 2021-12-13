@@ -36,7 +36,7 @@
     methods: {
       addHashtag() {
         const payload = this.$data.newHashtag
-        axios.post(`http://hashchat-api.onboarding.dev/app/v1/user/${this.name}`, {hashtagId: payload})
+        axios.post(`https://hashchat-api.onboarding.dev/app/v1/user/${this.name}`, {hashtagId: payload})
         .then(() => (this.$emit('onUpdateHashags', payload)))
         .catch(err => console.log(err))
         this.$data.newHashtag = ''
