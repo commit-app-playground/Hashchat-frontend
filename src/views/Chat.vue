@@ -74,7 +74,7 @@
       },
       connect () {
         console.log("Starting connection to WebSocket Server")
-        this.connection = new WebSocket("ws://hashchat-api.onboarding.dev/app/v1/websocket")
+        this.connection = new WebSocket("wss://hashchat-api.onboarding.dev/app/v1/websocket")
         this.connection.onopen = () => {
           if(this.$route.params.chatname.split(',').length === 1){
             this.selectedHashtagChannel = this.$route.params.chatname
