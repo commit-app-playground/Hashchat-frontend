@@ -7,9 +7,9 @@
               </div>
               <ul class="list-group list-group-flush text-right" ref="scrollLog">
                   <h4 v-if="!messages.length" class="empty">Get the conversation started!</h4>
-                  <li class="list-group-item" v-for="message in messages" :key="message.id">
-                      <span class="float-left" v-bind:style="{ color: $route.params.chatname.split(',').length > 1 ? stringToColour(message.hashId) : 'black' }">
-                          <small v-if="$route.params.chatname.split(',').length > 1" class="empty">#{{message.hashId}}-</small>
+                  <li class="list-group-item" v-for="message in messages" :key="message.id" v-bind:style="{ backgroundColor: $route.params.chatname.split(',').length > 1 ? stringToColour(message.hashId) : 'white', border:  $route.params.chatname.split(',').length > 1 && 0 }">
+                      <span class="float-left" v-bind:style="{ color: $route.params.chatname.split(',').length > 1 ? 'white' : 'black' }">
+                          <small v-if="$route.params.chatname.split(',').length > 1" class="empty"  v-on:click="goToChat(message.hashId)">#{{message.hashId}}-</small>
                           <small>{{message.username}}:</small>
                           {{message.text}}
                           
@@ -46,10 +46,6 @@
     data () {
         return {
           messages: [],
-          info: [
-            {username:"jd", id: 123415, type: "admin" },
-            {username:"yoyo", id: 1232415, type: "free" },
-            ],
           connections: 0,
           connection: null,
           newMessage:  "",
@@ -110,6 +106,9 @@
                 console.log(str)
 
         return colour;
+      },
+      goToChat(val) {
+          this.$router.push({ path: `/user/${this.$route.params.name}/chat/${val}` })
       }
     },
 
